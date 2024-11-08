@@ -1,0 +1,19 @@
+﻿@using FunWithFood.Dto.Cuisine
+@{
+    ViewData["Title"] = "Edit Cuisine";
+}
+
+@model EditCuisineDto
+
+<div class="text-center bg-info border border-dark rounded" style="width: 600px; margin: 0 auto;">
+    <h1 class="display-4">Edit Cuisine</h1>
+
+
+<form asp-action="EditCuisine" asp-controller="Cuisine">
+    <input type="hidden" asp-for="Id" />
+    <label class="mt-4">Type</label>
+        <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="@Model.Type" asp-for="Type" />
+
+    <button type="submit" class="btn btn-success m-2">Edit Cuisine</button>
+</form>
+</div>

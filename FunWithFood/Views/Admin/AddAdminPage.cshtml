@@ -1,0 +1,40 @@
+﻿@using FunWithFood.Dto.Admin
+@{
+    ViewData["Title"] = "Admin Registration";
+}
+
+@model AddAdminDto
+
+<div class="text-center bg-secondary border border-dark rounded" style="width: 600px; margin: 0 auto;">
+    <h1 class="display-4">Register an Admin Account</h1>
+
+    <div class="text-center">
+        <form asp-action="AddAdmin" asp-controller="Admin">
+            <label class="mt-4">Username</label>
+            <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Admin" asp-for="Username" disabled/>
+            <label class="mt-4">Password</label>
+            <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Password" asp-for="Password" />
+
+            <button type="submit" class="btn btn-primary m-2">Register Admin Account</button>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ExistingAdminAccountExist", "Admin")',
+            type: 'GET',
+            success: function (data) {
+                if (data === true) {
+                    alert('An admin account already exists.');
+                    window.location.href = '@Url.Action("LoginPage", "Admin")';
+                } 
+            },
+            error: function () {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+</script>

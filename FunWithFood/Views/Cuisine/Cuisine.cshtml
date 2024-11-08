@@ -1,0 +1,51 @@
+﻿@using FunWithFood.ViewModels
+@{
+    ViewData["Title"] = "Cuisine";
+}
+
+@{
+    bool isUserAuthenticated = Context.Request.Cookies["AuthToken"] != null && ViewBag.IsTokenValid;
+}
+
+@model List<CuisineViewModel>
+
+<div class="text-center">
+    <h1 class="display-4">Cuisine</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Cuisine
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (CuisineViewModel cuisine in Model)
+                {
+                    <tr>
+                        <td>
+                            @cuisine.Type
+                        </td>
+                        <td>
+                            @if (isUserAuthenticated)
+                            {
+                                <a asp-controller="Cuisine" asp-action="EditCuisinePage" asp-route-id="@cuisine.Id" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+                                <a asp-controller="Cuisine" asp-action="DeleteCuisine" asp-route-id="@cuisine.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @if (isUserAuthenticated)
+    {
+        <div class="text-center">
+            <form asp-controller="Cuisine" asp-action="AddCuisinePage" method="get">
+                <button type="submit" class="btn btn-success">Add Cuisine</button>
+            </form>
+        </div>
+    }
+</div>

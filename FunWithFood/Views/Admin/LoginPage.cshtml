@@ -1,0 +1,47 @@
+﻿@using FunWithFood.Dto.Admin
+@{
+    ViewData["Title"] = "Admin Login";
+}
+
+@model LoginDto
+
+<div class="text-center bg-info border border-dark rounded" style="width: 600px; margin: 0 auto;">
+    <h1 class="display-4">Admin Login</h1>
+
+    <div class="text-center">
+        <form form id="loginForm">
+            <label class="mt-4">Username</label>
+            <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Username" asp-for="Username" />
+            <label class="mt-4">Password</label>
+            <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Password" asp-for="Password" />
+
+            <button type="submit" class="btn btn-success m-2">Login</button>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault(); 
+
+            $.ajax({
+                url: '@Url.Action("Login", "Admin")',
+                type: 'POST',
+                data: $(this).serialize(), 
+                success: function (response) {
+                    if (response.success) {
+                        
+                        window.location.href = '@Url.Action("Index", "Food")';
+                    } else {
+                        alert(response.message || "Login failed. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred. Please try again.");
+                }
+            });
+        });
+    });
+</script>
