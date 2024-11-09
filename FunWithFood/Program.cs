@@ -10,7 +10,6 @@ using FunWithFoodDomain.Interfaces.Mappers;
 using FunWithFoodDomain.Services;
 using FunWithFoodInfrastructure;
 using FunWithFoodInfrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,13 +18,17 @@ using VideoGameOnlineShopDomain.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Configuration
+       .SetBasePath(Directory.GetCurrentDirectory())
+       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+       .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 // we will do this step AFTER we created our DbContext
 // Context is the db context that we created.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<FoodDbContext>(options => options.UseSqlServer(connectionString));
 
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 //automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
