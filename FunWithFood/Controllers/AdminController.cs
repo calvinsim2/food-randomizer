@@ -1,5 +1,6 @@
 ﻿using FunWithFood.Dto.Admin;
 using FunWithFood.Interfaces;
+using FunWithFoodDomain.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunWithFood.Controllers
@@ -45,22 +46,32 @@ namespace FunWithFood.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LoginDto loginDto) 
         {
-            string token = await _adminApplicationService.LoginUserAsync(loginDto);
-
-            if (!string.IsNullOrEmpty(token))
+            try
             {
+                string token = await _adminApplicationService.LoginUserAsync(loginDto);
 
                 Response.Cookies.Append("AuthToken", token, new CookieOptions
                 {
                     HttpOnly = true,
                     Secure = false,
-                    Expires = DateTime.UtcNow.AddDays(1) 
+                    Expires = DateTime.UtcNow.AddDays(1)
                 });
 
                 return Json(new { success = true });
             }
-
-            return Json(new { success = false, message = "Invalid login" });
+            catch (NotFoundException ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+            catch (BadRequestException ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex) 
+            {
+                return Json(new { success = false, message = "An error occured. Please try again later." });
+            }
+            
         }
 
         [HttpGet]
