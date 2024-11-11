@@ -1,7 +1,7 @@
-# Console Quest
+# FunWithFood
 
 ## Introduction
-The Food Randomizer application is an ASP.NET Core MVC project that allows users to explore a variety of foods by randomly generating food suggestions based on user-selected criteria. This application uses a backend API to fetch food items and provides users with filtering options for specific cuisines, keeping them engaged and helping them discover new foods.
+FunWithFood - A Food Randomizer application which is built using ASP.NET Core MVC project that allows users to explore a variety of foods by randomly generating food suggestions based on user-selected criteria. This application uses a backend API to fetch food items and provides users with filtering options for specific cuisines, keeping them engaged and helping them discover new foods.
 
 ## Motivation
 
