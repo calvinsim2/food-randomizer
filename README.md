@@ -13,10 +13,10 @@ FunWithFood was designed to help users decide on a meal when they’re unsure of
    Make sure you have the .NET 6 SDK installed on your machine. You can download it from the official .NET website:  
    [Download .NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 
-2. 1. **Microsoft SQL Server**  
+2. **Microsoft SQL Server**  
    Make sure you have the MSQL Server installed on your machine. You can download it from the official Microsoft website:  
    [Download Microsoft SQL Server](https://www.microsoft.com/en-sg/sql-server/sql-server-downloads)
-   1. 
+    
 3. **Git**  
    Ensure that Git is installed to clone the repository. If not, download it here:  
    [Download Git](https://git-scm.com/downloads)
@@ -37,6 +37,7 @@ FunWithFood was designed to help users decide on a meal when they’re unsure of
     cd food-randomizer
 
 3. **Configure the Database**
+    ```bash
     Set up a SQL Server database, and update the connection string in appsettings.Development.json or environment variables for Azure.
 
 4. **Restore Dependencies Run the following command to restore the necessary dependencies for the project:**
@@ -56,7 +57,8 @@ FunWithFood was designed to help users decide on a meal when they’re unsure of
     dotnet run
 
 8. **Access the Application**
-    Open a browser and navigate to http://localhost:5000 (check launchSettings.json for the correct port) to access the app.
+    ```bash
+    Open a browser and navigate to the correct localhost port (check launchSettings.json for the correct port) to access the app.
 
 ## Usage
 1. Randomize Food: Click on the randomize button at the Home page to get a random food suggestion.
