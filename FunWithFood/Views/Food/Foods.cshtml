@@ -11,24 +11,24 @@
 
 <div class="text-center">
     <h1 class="display-4">Foods!</h1>
-    <div class="form-group mb-3 mx-auto mt-2" style="width: 18rem;">
+    <div class="form-group mb-3 mx-auto mt-2" style="max-width: 200px;">
         <label for="cuisineFilter">Filter by Cuisine:</label>
-        <select id="cuisineFilter" class="form-select mx-auto" style="width: 400px" asp-items="ViewBag.CuisineList">
+        <select id="cuisineFilter" class="form-select mx-auto" asp-items="ViewBag.CuisineList">
             <option value="">All</option>
         </select>
 
     </div>
-    <div class="container d-flex flex-row flex-wrap justify-content-start">
+    <div class="container d-flex flex-row flex-wrap justify-content-start mx-auto">
         @{
             foreach (FoodDisplayViewModel food in Model)
             {
-                <div class="card food-card" style="width: 18rem;" data-cuisine="@food.CuisineType">
+                <div class="card food-card mx-auto" style="max-width: 18rem;" data-cuisine="@food.CuisineType">
                     <div style="width: 18rem; height: 200px">
                         <img src="data:image/jpeg;base64,@food.ImageBase64" alt="Food Image" class="card-img-top food-image">
                     </div>
 
 
-                    <div class="card-body">
+                    <div class="card-body" style="max-width: 18rem;">
                         <h5 class="card-title">@food.Name</h5>
                         <p class="card-text">@food.CuisineType</p>
                         @if (isUserAuthenticated)
