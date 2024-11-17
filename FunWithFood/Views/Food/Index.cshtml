@@ -34,41 +34,41 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(function() {
         $('#newFoodButton').on('click', function () {
             $.ajax({
-                url: '@Url.Action("GetRandomFood", "Food")', 
+                url: '@Url.Action("GetRandomFood", "Food")',
                 type: 'GET',
-                success: function (data) {
-                    const cardTitle = $('.card-title');
-                    const cardText = $('.card-text');
-                    const cardImage = $('.food-image');
-                    const noImageText = cardImage.siblings('.no-image-text');
+            }).
+            then((data) => {
+                const cardTitle = $('.card-title');
+                const cardText = $('.card-text');
+                const cardImage = $('.food-image');
+                const noImageText = cardImage.siblings('.no-image-text');
 
-                    cardTitle.text(data.name);
-                    cardText.text(data.cuisineType);
+                cardTitle.text(data.name);
+                cardText.text(data.cuisineType);
 
-                    if (noImageText.length) {
-                        noImageText.remove();
-                    }
-                    // Check if image data is available and update accordingly
-                    if (data.imageBase64) {
-                        cardImage.attr('src', 'data:image/jpeg;base64,' + data.imageBase64);
-                        cardImage.show();  
-                        
-                    } else {
-                        cardImage.hide();  
-                        
-                        if (!noImageText.length) {
-                            cardImage.after('<p class="no-image-text">No image available</p>');
-                        }
-                    }
-
-                },
-                error: function () {
-                    alert('Could not load new food item. Please try again.');
+                if (noImageText.length) {
+                    noImageText.remove();
                 }
+                // Check if image data is available and update accordingly
+                if (data.imageBase64) {
+                    cardImage.attr('src', 'data:image/jpeg;base64,' + data.imageBase64);
+                    cardImage.show();
+
+                } else {
+                    cardImage.hide();
+
+                    if (!noImageText.length) {
+                        cardImage.after('<p class="no-image-text">No image available</p>');
+                    }
+                }
+            },
+            () => {
+                alert('Could not load new food item. Please try again.');
             });
         });
-    });
+    })
+
 </script>

@@ -22,19 +22,19 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(function () {
         $.ajax({
             url: '@Url.Action("ExistingAdminAccountExist", "Admin")',
-            type: 'GET',
-            success: function (data) {
-                if (data === true) {
-                    alert('An admin account already exists.');
-                    window.location.href = '@Url.Action("LoginPage", "Admin")';
-                } 
-            },
-            error: function () {
-                alert('An error occurred. Please try again.');
+            type: 'GET'
+        }).then((data) => {
+            if (data === true) {
+                alert('An admin account already exists.');
+                window.location.href = '@Url.Action("LoginPage", "Admin")';
             }
-        });
+        },
+            () => {
+                alert('An error occurred. Please try again.');
+            });
+
     });
 </script>

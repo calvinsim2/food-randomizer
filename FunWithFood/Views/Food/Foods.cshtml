@@ -56,12 +56,11 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // Filter cards based on dropdown selection
+    $(function() {
+        
         $('#cuisineFilter').on('change', function () {
             const selectedCuisine = $(this).val();
 
-            // Show or hide food cards based on selected cuisine type
             $('.food-card').each(function () {
                 const cardCuisine = $(this).data('cuisine');
                 if (selectedCuisine === "" || cardCuisine === selectedCuisine) {
@@ -71,5 +70,6 @@
                 }
             });
         });
-    });
+    })
+ 
 </script>
