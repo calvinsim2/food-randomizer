@@ -11,18 +11,9 @@
 <div class="text-center">
     <h3 class="display-4">How about trying this?</h3>
     <div class="card text-center mx-auto" style="width: 18rem;">
-        <div style="width: 18rem; height: 200px">
-            @if (!string.IsNullOrEmpty(Model.ImageBase64))
-            {
-                <img src="data:image/jpeg;base64,@Model.ImageBase64" alt="Food Image" class="card-img-top food-image">
-            }
-            else
-            {
-                <p class ="no-image-text">No image available</p>
-            }
+        <div class="card-image-container" style="width: 18rem; height: 200px">
+            <img src="data:image/jpeg;base64,@Model.ImageBase64" alt="Food Image" class="card-img-top food-image">
         </div>
-
-
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <p class="card-text">@Model.CuisineType</p>
@@ -34,41 +25,55 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
-    $(function() {
+    $(function () {
+        const generateSpinner = function () {
+            const spinner = $('<div>')
+                .addClass('spinner-border text-primary text-center m-auto')
+                .attr('role', 'status');
+
+            const hiddenText = $('<span>')
+                .addClass('visually-hidden')
+                .text('Loading...');
+
+            spinner.append(hiddenText);
+
+            return spinner;
+        }
+
         $('#newFoodButton').on('click', function () {
+            const imageContainer = $('.card-image-container'); 
+            const cardBody = $('.card-body'); 
+            const spinner = generateSpinner(); 
+
+            imageContainer.html('').append(spinner);
+
+            cardBody.html('<p>Loading new food...</p>');
+
             $.ajax({
                 url: '@Url.Action("GetRandomFood", "Food")',
                 type: 'GET',
-            }).
-            then((data) => {
-                const cardTitle = $('.card-title');
-                const cardText = $('.card-text');
-                const cardImage = $('.food-image');
-                const noImageText = cardImage.siblings('.no-image-text');
+            })
+                .then((data) => {
+                    
+                    setTimeout(() => {
+                        
+                        imageContainer.html(`
+                                <img src="data:image/jpeg;base64,${data.imageBase64}" alt="Food Image" class="card-img-top food-image">
+                            `);
 
-                cardTitle.text(data.name);
-                cardText.text(data.cuisineType);
-
-                if (noImageText.length) {
-                    noImageText.remove();
-                }
-                // Check if image data is available and update accordingly
-                if (data.imageBase64) {
-                    cardImage.attr('src', 'data:image/jpeg;base64,' + data.imageBase64);
-                    cardImage.show();
-
-                } else {
-                    cardImage.hide();
-
-                    if (!noImageText.length) {
-                        cardImage.after('<p class="no-image-text">No image available</p>');
-                    }
-                }
-            },
-            () => {
-                alert('Could not load new food item. Please try again.');
-            });
+                        cardBody.html(`
+                                <h5 class="card-title">${data.name}</h5>
+                                <p class="card-text">${data.cuisineType}</p>
+                            `);
+                    }, 500); 
+                },
+                    () => {
+                        
+                        imageContainer.html('<p class="text-danger">Error loading image.</p>');
+                        cardBody.html('<p class="text-danger">Could not load food details.</p>');
+                    });
         });
+
     })
 
 </script>
