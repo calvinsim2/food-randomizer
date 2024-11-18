@@ -70,10 +70,12 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<ICuisineApplicationService, CuisineApplicationService>();
     services.AddScoped<IFoodApplicationService, FoodApplicationService>();
     services.AddScoped<IAdminApplicationService, AdminApplicationService>();
+    services.AddScoped<IHealthCheckApplicationService, HealthCheckApplicationService>();
 
     services.AddScoped<ICuisineService, CuisineService>();
     services.AddScoped<IFoodService, FoodService>();
     services.AddScoped<IAdminService, AdminService>();
+    services.AddScoped<IHealthCheckService, HealthCheckService>();
 
 
     #endregion
@@ -83,7 +85,7 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<ICuisineRepository, CuisineRepository>();
     services.AddScoped<IFoodRepository, FoodRepository>();
     services.AddScoped<IAdminRepository, AdminRepository>();
-
+    services.AddScoped<IHealthCheckRepository, HealthCheckRepository>();
 
     #endregion
 

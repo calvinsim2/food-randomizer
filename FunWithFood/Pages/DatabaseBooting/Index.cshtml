@@ -9,15 +9,35 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Booting</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <h1>Our service is starting up</h1>
-    <p>The database is currently resuming. This may take up to a minute. Please refresh the page after a short while.</p>
+    <div class="text-center mx-auto bg-light">
+        <h1>Our service is starting up</h1>
+        <p>The database is currently resuming.</p>
+        <img src="/images/robot.png" alt="Robot" />
+        <p>This may take up to a minute. Please refresh the page after a short while.</p>
+    </div>
 </body>
 </html>
 
 <script>
-    setTimeout(() => {
-        window.location.reload();
-    }, 15000); 
+    const checkDatabaseStatus = async () => {
+        try {
+            const response = await fetch('/api/HealthCheck/IsDatabaseReady');
+            const data = await response.json();
+
+            if (data.isReady) {
+                window.location.href = "/";
+            } else {
+                setTimeout(checkDatabaseStatus, 15000);
+            }
+        } catch (error) {
+            console.error("Error checking database status:", error);
+            setTimeout(checkDatabaseStatus, 15000);
+        }
+    };
+
+    checkDatabaseStatus();
 </script>

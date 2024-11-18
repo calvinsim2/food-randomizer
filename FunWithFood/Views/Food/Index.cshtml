@@ -5,11 +5,11 @@
 
 @model FoodDisplayViewModel
 
-<div class="text-center">
-    <h1 class="display-4 cuisine-font">Hungry?</h1>
+<div class="text-center mx-auto" style="width: 18rem;">
+    <h1 class="display-4 header-font">Hungry?</h1>
 </div>
 <div class="text-center">
-    <div class="card text-center mx-auto" style="width: 18rem;">
+    <div class="card text-center mx-auto border border-2 rounded border-dark food-card" style="width: 18rem;">
         <div class="card-image-container" style="width: 18rem; height: 200px">
             <img src="data:image/jpeg;base64,@Model.ImageBase64" alt="Food Image" class="card-img-top food-image">
         </div>

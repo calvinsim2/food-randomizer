@@ -9,11 +9,12 @@
 
 @model List<FoodDisplayViewModel>
 
-<div class="text-center">
-    <h1 class="display-4">Foods!</h1>
+<div class="text-center mx-auto">
+    <div class="text-center mx-auto" style="width: 18rem;">
+        <h1 class="display-4 header-font">Foods!</h1>
+    </div>
     <div class="form-group mb-3 mx-auto mt-2" style="max-width: 200px;">
-        <label for="cuisineFilter">Filter by Cuisine:</label>
-        <select id="cuisineFilter" class="form-select mx-auto" asp-items="ViewBag.CuisineList">
+        <select id="cuisineFilter" class="form-select text-center mx-auto text-font" asp-items="ViewBag.CuisineList">
             <option value="">All</option>
         </select>
 
@@ -22,7 +23,7 @@
         @{
             foreach (FoodDisplayViewModel food in Model)
             {
-                <div class="card food-card mx-auto" style="max-width: 18rem;" data-cuisine="@food.CuisineType">
+                <div class="card food-card mx-auto border border-2 rounded border-dark" style="max-width: 18rem;" data-cuisine="@food.CuisineType">
                     <div style="width: 18rem; height: 200px">
                         <img src="data:image/jpeg;base64,@food.ImageBase64" alt="Food Image" class="card-img-top food-image">
                     </div>
