@@ -1,6 +1,7 @@
 using FunWithFood.Helpers;
 using FunWithFood.Interfaces;
 using FunWithFood.Interfaces.Mappers;
+using FunWithFood.Middleware;
 using FunWithFood.Services;
 using FunWithFoodDomain.Common;
 using FunWithFoodDomain.Helpers;
@@ -29,6 +30,7 @@ builder.Services.AddDbContext<FoodDbContext>(options => options.UseSqlServer(con
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 //automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -44,9 +46,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRouting();
+app.MapRazorPages();
+app.UseMiddleware<DatabaseBootMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();

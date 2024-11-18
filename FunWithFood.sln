@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunWithFood", "FunWithFood\
 		{FE510914-FC2A-414D-8FDE-F255E64E376D} = {FE510914-FC2A-414D-8FDE-F255E64E376D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunWithFoodDomain", "FunWithFoodDomain\FunWithFoodDomain.csproj", "{FE510914-FC2A-414D-8FDE-F255E64E376D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunWithFoodDomain", "FunWithFoodDomain\FunWithFoodDomain.csproj", "{FE510914-FC2A-414D-8FDE-F255E64E376D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunWithFoodInfrastructure", "FunWithFoodInfrastructure\FunWithFoodInfrastructure.csproj", "{AC39433C-4E6E-4905-9C9D-315E9A40D09F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunWithFoodInfrastructure", "FunWithFoodInfrastructure\FunWithFoodInfrastructure.csproj", "{AC39433C-4E6E-4905-9C9D-315E9A40D09F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
