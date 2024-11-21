@@ -37,6 +37,9 @@ namespace VideoGameOnlineShopDomain.Common
             return inputStringRemoveEmptySpace.ToUpper();
         }
 
-        
+        public int GenerateRandomInteger(int upperLimit)
+        {
+            return new Random().Next(upperLimit);
+        }
     }
 }

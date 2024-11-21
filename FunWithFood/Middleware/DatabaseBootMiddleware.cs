@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using FunWithFoodDomain.Constants;
+using Microsoft.Data.SqlClient;
 
 namespace FunWithFood.Middleware
 {
@@ -25,13 +26,7 @@ namespace FunWithFood.Middleware
 
         private bool IsDatabaseStartingError(SqlException ex)
         {
-            // General SQL Server error codes
-            var generalErrors = new HashSet<int> { 18401, 17142, 4060, -2 };
-
-            // Azure-specific error codes for paused or unavailable database
-            var azureErrors = new HashSet<int> { 40613, 40197, 40501 };
-
-            return generalErrors.Contains(ex.Number) || azureErrors.Contains(ex.Number);
+            return ErrorCodes.SqlErrorCodes.Contains(ex.Number) || ErrorCodes.AzureSqlErrorCodes.Contains(ex.Number);
         }
     }
 

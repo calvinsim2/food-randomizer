@@ -5,5 +5,6 @@
         Guid ConvertStringToGuid(string stringId);
         string RemoveEmptySpaceAndCapitalizeString(string inputString);
         void ValidateStringIfIsEmptyOrNull(string inputString);
+        int GenerateRandomInteger(int upperLimit);
     }
 }

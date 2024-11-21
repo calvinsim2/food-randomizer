@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunWithFoodDomain", "FunWit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunWithFoodInfrastructure", "FunWithFoodInfrastructure\FunWithFoodInfrastructure.csproj", "{AC39433C-4E6E-4905-9C9D-315E9A40D09F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunWithFoodTest", "FunWithFoodTest\FunWithFoodTest.csproj", "{5AEAE51C-00DD-4808-B956-7A94546A88C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{AC39433C-4E6E-4905-9C9D-315E9A40D09F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC39433C-4E6E-4905-9C9D-315E9A40D09F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC39433C-4E6E-4905-9C9D-315E9A40D09F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AEAE51C-00DD-4808-B956-7A94546A88C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AEAE51C-00DD-4808-B956-7A94546A88C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AEAE51C-00DD-4808-B956-7A94546A88C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AEAE51C-00DD-4808-B956-7A94546A88C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
