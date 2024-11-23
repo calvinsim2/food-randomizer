@@ -2,7 +2,6 @@
 using FunWithFood.Controllers;
 using FunWithFood.Dto.Food;
 using FunWithFood.Interfaces;
-using FunWithFood.Services;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.Constants;
 using FunWithFoodDomain.Interfaces.Common;
