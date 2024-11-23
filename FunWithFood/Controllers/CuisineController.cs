@@ -36,12 +36,14 @@ namespace FunWithFood.Controllers
             return View(cuisines);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public IActionResult AddCuisinePage()
         {
             return View();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<IActionResult> AddCuisine(AddCuisineDto cuisineDto)
         {
@@ -50,6 +52,7 @@ namespace FunWithFood.Controllers
             return RedirectToAction("Cuisine");
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public async Task<IActionResult> EditCuisinePage(Guid id)
         {
@@ -69,6 +72,7 @@ namespace FunWithFood.Controllers
             return View(editCuisineDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<IActionResult> EditCuisine(EditCuisineDto editCuisineDto)
         {
@@ -76,7 +80,7 @@ namespace FunWithFood.Controllers
             return RedirectToAction("Cuisine");
         }
 
-        
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteCuisine(Guid id)
         {
             await _cuisineApplicationService.DeleteCuisineAsync(id);
