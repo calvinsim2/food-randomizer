@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 
-namespace FunWithFoodTest.Controller
+namespace FunWithFoodTest.Application.Controller
 {
     public class FoodControllerTest
     {
@@ -190,9 +190,9 @@ namespace FunWithFoodTest.Controller
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
 
             SelectList cuisineList = Assert.IsType<SelectList>(_foodController.ViewBag.CuisineList);
-            Assert.Equal(2, cuisineList.Count()); 
-            Assert.Contains(cuisineList, c => c.Text == "Italian"); 
-            Assert.Contains(cuisineList, c => c.Text == "Japanese"); 
+            Assert.Equal(2, cuisineList.Count());
+            Assert.Contains(cuisineList, c => c.Text == "Italian");
+            Assert.Contains(cuisineList, c => c.Text == "Japanese");
 
             A.CallTo(() => _cuisineApplicationServiceMock.GetAllCuisineViewModelAsync())
                 .MustHaveHappened();
@@ -251,7 +251,7 @@ namespace FunWithFoodTest.Controller
         {
             // Arrange
             Guid mockId = Guid.NewGuid();
-            FoodViewModel foodViewModel = new FoodViewModel 
+            FoodViewModel foodViewModel = new FoodViewModel
             {
                 Id = mockId,
                 CuisineId = mockId,
