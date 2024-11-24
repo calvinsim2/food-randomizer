@@ -5,12 +5,11 @@ using FunWithFood.Interfaces;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.Interfaces.Common;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 
-namespace FunWithFoodTest
+namespace FunWithFoodTest.Application.Controller
 {
     public class CuisineControllerTest
     {
@@ -25,7 +24,7 @@ namespace FunWithFoodTest
 
         private static readonly ITempDataProvider _tempDataProviderMock = A.Fake<ITempDataProvider>();
         private static readonly TempDataDictionary tempData = new TempDataDictionary(_httpContextMock, _tempDataProviderMock);
-        
+
 
         private void SetupControllerRequiredData()
         {
@@ -38,7 +37,7 @@ namespace FunWithFoodTest
         {
             SetupControllerRequiredData();
 
-            CuisineViewModel cuisineViewModelMock = new CuisineViewModel 
+            CuisineViewModel cuisineViewModelMock = new CuisineViewModel
             {
                 Id = Guid.NewGuid(),
                 Type = "Chinese"
@@ -50,7 +49,7 @@ namespace FunWithFoodTest
                 Type = "Muslim"
             };
 
-            List<CuisineViewModel> cuisineViewModelsMock = new List<CuisineViewModel> { cuisineViewModelMock, cuisineViewModelTwoMock };    
+            List<CuisineViewModel> cuisineViewModelsMock = new List<CuisineViewModel> { cuisineViewModelMock, cuisineViewModelTwoMock };
 
             A.CallTo(() => _cuisineApplicationServiceMock.GetAllCuisineViewModelAsync()).Returns(cuisineViewModelsMock);
 
@@ -80,7 +79,7 @@ namespace FunWithFoodTest
         [Fact]
         public async Task AddCuisine_Positive_OnAddingCuisine_ShouldRedirectToCuisinePage()
         {
-            AddCuisineDto addCuisineDtoMock = new AddCuisineDto 
+            AddCuisineDto addCuisineDtoMock = new AddCuisineDto
             {
                 Type = "Chinese"
             };
@@ -99,7 +98,7 @@ namespace FunWithFoodTest
         {
             Guid mockGuid = Guid.NewGuid();
 
-            CuisineViewModel cuisineViewModelMock = new CuisineViewModel 
+            CuisineViewModel cuisineViewModelMock = new CuisineViewModel
             {
                 Id = mockGuid,
                 Type = "Italian"
@@ -129,7 +128,7 @@ namespace FunWithFoodTest
         {
             CuisineViewModel cuisineViewModelMock = null;
 
-            A.CallTo( () => _cuisineApplicationServiceMock.GetCuisineViewModelByIdAsync(Guid.NewGuid()))
+            A.CallTo(() => _cuisineApplicationServiceMock.GetCuisineViewModelByIdAsync(Guid.NewGuid()))
                 .WithAnyArguments().Returns(cuisineViewModelMock);
 
             IActionResult result = await _cuisineController.EditCuisinePage(Guid.NewGuid());

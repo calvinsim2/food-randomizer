@@ -7,10 +7,10 @@ namespace FunWithFood.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly ILogger<FoodController> _logger;
+        private readonly ILogger<AdminController> _logger;
         private readonly IAdminApplicationService _adminApplicationService;
 
-        public AdminController(ILogger<FoodController> logger,
+        public AdminController(ILogger<AdminController> logger,
                               IAdminApplicationService adminApplicationService)
         {
             _logger = logger;
@@ -18,13 +18,13 @@ namespace FunWithFood.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddAdminPage()
+        public IActionResult AddAdminPage()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddAdmin(AddAdminDto addAdminDto) 
+        public async Task<IActionResult> AddAdmin(AddAdminDto addAdminDto) 
         {
             await _adminApplicationService.RegisterAdminAccountAsync(addAdminDto);
 
@@ -44,7 +44,7 @@ namespace FunWithFood.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginDto loginDto) 
+        public async Task<IActionResult> Login(LoginDto loginDto) 
         {
             try
             {
