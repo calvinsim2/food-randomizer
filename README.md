@@ -10,7 +10,7 @@ FunWithFood was designed to help users decide on a meal when they’re unsure of
 ## Prerequisites
 
 1. **.NET SDK 8.0**  
-   Make sure you have the .NET 6 SDK installed on your machine. You can download it from the official .NET website:  
+   Make sure you have the .NET 8 SDK installed on your machine. You can download it from the official .NET website:  
    [Download .NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 2. **Microsoft SQL Server**  
