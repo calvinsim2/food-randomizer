@@ -29,6 +29,8 @@ namespace FunWithFood.Helpers
             CreateMap<AddAdminDto, AddAdminDataModel>();
             CreateMap<AddAdminDataModel, Admin>();
 
+            CreateMap<Dessert, DessertDataModel>();
+            CreateMap<DessertDataModel, Dessert>();
         }
     }
 }

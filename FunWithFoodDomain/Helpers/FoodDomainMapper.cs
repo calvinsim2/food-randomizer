@@ -20,8 +20,8 @@ namespace FunWithFoodDomain.Helpers
 
             foreach (var food in foods)
             {
-                FoodDataModel cuisineDataModel = _mapper.Map<FoodDataModel>(food);
-                foodDataModels.Add(cuisineDataModel);
+                FoodDataModel foodDataModel = _mapper.Map<FoodDataModel>(food);
+                foodDataModels.Add(foodDataModel);
             }
 
             return foodDataModels;
