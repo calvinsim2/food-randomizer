@@ -23,5 +23,11 @@ namespace FunWithFoodDomain.Services
 
             return dessertDataModels;
         }
+
+        public async Task AddFoodAsync(DessertDataModel dessertDataModel)
+        {
+            Dessert dessert = _mapper.MapDessertDataModelToDessert(dessertDataModel);
+            await _dessertRepository.AddAsync(dessert);
+        }
     }
 }
