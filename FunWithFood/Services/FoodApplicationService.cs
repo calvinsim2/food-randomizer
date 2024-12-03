@@ -55,7 +55,7 @@ namespace FunWithFood.Services
 
         public async Task AddFoodAsync(AddFoodDto addFoodDto)
         {
-            byte[]? imageData = await _imageConversionService.ConvertFileToByteArray(addFoodDto.ImageFile);
+            byte[] imageData = await _imageConversionService.ConvertFileToByteArray(addFoodDto.ImageFile);
 
             FoodDataModel foodDataModel = _foodMapper.MapAddFoodDtoToFoodDataModel(addFoodDto, imageData);
             await _foodService.AddFoodAsync(foodDataModel);
@@ -63,7 +63,8 @@ namespace FunWithFood.Services
 
         public async Task EditFoodAsync(EditFoodDto editFoodDto)
         {
-            byte[]? imageData = await _imageConversionService.ConvertFileToByteArray(editFoodDto.ImageFile);
+            byte[]? imageData = editFoodDto.ImageFile is null ? _imageConversionService.ConvertBase64ToByte(editFoodDto.ImageBase64) :
+                                await _imageConversionService.ConvertFileToByteArray(editFoodDto.ImageFile);
 
             FoodDataModel foodDataModel = _foodMapper.MapEditFoodDtoToFoodDataModel(editFoodDto, imageData);
 

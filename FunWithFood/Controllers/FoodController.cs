@@ -19,16 +19,19 @@ namespace FunWithFood.Controllers
         private readonly IFoodApplicationService _foodApplicationService;
         private readonly ICuisineApplicationService _cuisineApplicationService;
         private readonly IJwtTokenHandler _jwtTokenHandler;
+        private readonly ICommonUtilityMethods _commonUtilityMethods;
 
         public FoodController(ILogger<FoodController> logger, 
                               IFoodApplicationService foodApplicationService, 
                               ICuisineApplicationService cuisineApplicationService,
-                              IJwtTokenHandler jwtTokenHandler)
+                              IJwtTokenHandler jwtTokenHandler,
+                              ICommonUtilityMethods commonUtilityMethods)
         {
             _logger = logger;
             _foodApplicationService = foodApplicationService;
             _cuisineApplicationService = cuisineApplicationService;
             _jwtTokenHandler = jwtTokenHandler;
+            _commonUtilityMethods = commonUtilityMethods;
         }
 
         [HttpGet]
@@ -71,7 +74,8 @@ namespace FunWithFood.Controllers
                 return Json(new FoodDisplayViewModel { Name = Constant.NoFoodAvailable, CuisineType = string.Empty, ImageBase64 = null });
             }
 
-            FoodDisplayViewModel randomFood = foodDisplayViewModels[new Random().Next(foodDisplayViewModels.Count)];
+            FoodDisplayViewModel randomFood = 
+                foodDisplayViewModels[_commonUtilityMethods.GenerateRandomInteger(foodDisplayViewModels.Count)];
             return Json(randomFood);
         }
 

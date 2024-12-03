@@ -6,7 +6,7 @@ namespace FunWithFood.Services
     {
         public ImageConversionService() { }
 
-        public async Task<byte[]?> ConvertFileToByteArray(IFormFile? imageFile)
+        public async Task<byte[]> ConvertFileToByteArray(IFormFile? imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -17,18 +17,21 @@ namespace FunWithFood.Services
             }
 
             string? defaultImagePath = Path.Combine("wwwroot", "images", "default.jpg");
-            if (File.Exists(defaultImagePath))
-            {
-                return await File.ReadAllBytesAsync(defaultImagePath);
-            }
 
-            return null;
+            return await File.ReadAllBytesAsync(defaultImagePath);
+
         }
 
         public string? ConvertByteToBase64(byte[]? imageData)
         {
             string? imageBase64 = imageData is not null ? Convert.ToBase64String(imageData) : null;
             return imageBase64;
+        }
+
+        public byte[]? ConvertBase64ToByte(string? imageBase64)
+        {
+            byte[]? imageData = string.IsNullOrEmpty(imageBase64) ? null : Convert.FromBase64String(imageBase64);
+            return imageData;
         }
 
     }
