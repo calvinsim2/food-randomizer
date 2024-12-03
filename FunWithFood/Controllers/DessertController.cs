@@ -1,6 +1,10 @@
-﻿using FunWithFood.Interfaces;
+﻿using FunWithFood.Dto.Dessert;
+using FunWithFood.Dto.Food;
+using FunWithFood.Interfaces;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.Interfaces.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -41,6 +45,66 @@ namespace FunWithFood.Controllers
             ViewBag.IsTokenValid = isTokenValid;
 
             return View(dessertDisplayViewModels);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<IActionResult> AddDessertPage()
+        {
+            List<CuisineViewModel> cuisineViewModels = (await _cuisineApplicationService.GetAllCuisineViewModelAsync()).ToList();
+            ViewBag.CuisineList = new SelectList(cuisineViewModels, "Id", "Type");
+            return View();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        public async Task<IActionResult> AddDessert(AddDessertDto addDessertDto)
+        {
+            await _dessertApplicationService.AddDessertAsync(addDessertDto);
+            return RedirectToAction("Desserts");
+
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        public async Task<IActionResult> EditDessert(EditDessertDto editDessertDto)
+        {
+            await _dessertApplicationService.EditDessertAsync(editDessertDto);
+
+            return RedirectToAction("Desserts");
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<IActionResult> EditDessertPage(Guid id)
+        {
+            DessertViewModel? dessertViewModel = await _dessertApplicationService.GetDessertViewModelByIdAsync(id);
+
+            if (dessertViewModel is null)
+            {
+                return RedirectToAction("Desserts");
+            }
+
+            List<CuisineViewModel> cuisineViewModels = (await _cuisineApplicationService.GetAllCuisineViewModelAsync()).ToList();
+            ViewBag.CuisineList = new SelectList(cuisineViewModels, "Id", "Type");
+
+            EditDessertDto editDessertDto = new EditDessertDto
+            {
+                Id = dessertViewModel.Id,
+                CuisineId = dessertViewModel.CuisineId,
+                Name = dessertViewModel.Name,
+                ImageBase64 = dessertViewModel.ImageBase64,
+            };
+
+            return View(editDessertDto);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> DeleteDessert(Guid id)
+        {
+            await _dessertApplicationService.DeleteDessertAsync(id);
+
+            return RedirectToAction("Desserts");
         }
     }
 }

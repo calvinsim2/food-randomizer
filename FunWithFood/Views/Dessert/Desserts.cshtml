@@ -28,11 +28,16 @@
                         <img src="data:image/jpeg;base64,@dessert.ImageBase64" alt="Dessert Image" class="card-img-top food-image">
                     </div>
 
-
                     <div class="card-body" style="max-width: 18rem;">
                         <h5 class="card-title">@dessert.Name</h5>
                         <p class="card-text">@dessert.CuisineType</p>
+                        @if (isUserAuthenticated)
+                        {
+                            <a asp-controller="Dessert" asp-action="EditDessertPage" asp-route-id="@dessert.Id" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+                            <a asp-controller="Dessert" asp-action="DeleteDessert" asp-route-id="@dessert.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        }
                     </div>
+                    
                 </div>
             }
         }
@@ -41,7 +46,7 @@
     @if (isUserAuthenticated)
     {
         <div class="text-center mt-2">
-            <form asp-controller="Food" asp-action="AddDessertPage" method="get">
+            <form asp-controller="Dessert" asp-action="AddDessertPage" method="get">
                 <button type="submit" class="btn btn-primary">Add New Dessert!</button>
             </form>
         </div>

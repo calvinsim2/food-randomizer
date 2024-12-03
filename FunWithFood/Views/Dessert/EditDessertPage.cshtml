@@ -1,0 +1,48 @@
+﻿@using FunWithFood.Dto.Dessert
+@{
+    ViewData["Title"] = "Edit Dessert";
+}
+
+@model EditDessertDto
+
+<div div class="text-center bg-info border border-dark rounded" style="width: 600px; margin: 0 auto;">
+    <h1 class="display-4">Edit Dessert</h1>
+
+
+    <form asp-action="EditDessert" asp-controller="Dessert" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImageBase64" />
+        <select class="form-control mx-auto" style="width: 400px" asp-for="CuisineId" asp-items="ViewBag.CuisineList">
+            <option value="@Model.CuisineId">-- Select Cuisine --</option>
+        </select>
+        <label class="mt-4">Name</label>
+        <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="@Model.Name" asp-for="Name" />
+
+        <label>Image</label>
+        <img id="dessertImage"
+             src="@(Model.ImageBase64 != null ? $"data:image/jpeg;base64,{Model.ImageBase64}" : "")"
+             alt="Dessert Image"
+             class="mx-auto"
+             style="width: 200px; height: auto; margin-top: 10px; display: @(Model.ImageBase64 != null ? "block" : "none");" />
+
+        <input type="file" id="imageUpload" asp-for="ImageFile" class="form-control mx-auto m-2" style="width: 400px" accept="image/jpeg, image/png" />
+
+        <button type="submit" class="btn btn-success m-2">Edit Dessert</button>
+    </form>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function() {
+        $('#imageUpload').on("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#dessertImage').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            }
+        })
+    })
+</script>

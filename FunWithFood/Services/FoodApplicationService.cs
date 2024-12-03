@@ -45,7 +45,7 @@ namespace FunWithFood.Services
 
         public async Task<FoodViewModel> GetFoodViewModelByIdAsync(Guid id)
         {
-            FoodDataModel foodDataModel = await _foodService.GetFoodDataModelById(id);
+            FoodDataModel foodDataModel = await _foodService.GetFoodDataModelByIdAsync(id);
 
             FoodViewModel foodViewModel = _foodMapper.MapFoodDataModelToFoodViewModel(foodDataModel);
             foodViewModel.ImageBase64 = _imageConversionService.ConvertByteToBase64(foodDataModel.ImageData);

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FunWithFood.Dto.Admin;
 using FunWithFood.Dto.Cuisine;
+using FunWithFood.Dto.Dessert;
 using FunWithFood.Dto.Food;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.DataModels;
@@ -29,8 +30,11 @@ namespace FunWithFood.Helpers
             CreateMap<AddAdminDto, AddAdminDataModel>();
             CreateMap<AddAdminDataModel, Admin>();
 
+            CreateMap<AddDessertDto, DessertDataModel>();
+            CreateMap<EditDessertDto, DessertDataModel>();
             CreateMap<Dessert, DessertDataModel>();
             CreateMap<DessertDataModel, Dessert>();
+            CreateMap<DessertDataModel, DessertViewModel>();
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@using FunWithFood.Dto.Dessert
+@{
+    ViewData["Title"] = "Add Dessert";
+}
+
+@model AddDessertDto
+
+<div class="text-center bg-info border border-dark rounded" style="width: 600px; margin: 0 auto;">
+    <h1 class="display-4">Add Dessert</h1>
+    <form asp-action="AddDessert" asp-controller="Dessert" enctype="multipart/form-data">
+        <select class="form-control mx-auto" style="width: 400px" asp-for="CuisineId" asp-items="ViewBag.CuisineList">
+            <option value="">-- Select Cuisine --</option>
+        </select>
+        <label class="mt-4">Dessert Name</label>
+        <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Insert Dessert Name" asp-for="Name" />
+        <label class="mt-4">Image</label>
+        <input type="file" class="form-control mx-auto" style="width: 400px" asp-for="ImageFile" accept="image/jpeg, image/png" />
+
+
+        <button type="submit" class="btn btn-primary m-2">Add Dessert</button>
+    </form>
+</div>

@@ -1,9 +1,9 @@
-﻿using FunWithFood.Interfaces;
+﻿using FunWithFood.Dto.Dessert;
+using FunWithFood.Interfaces;
 using FunWithFood.Interfaces.Mappers;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.DataModels;
 using FunWithFoodDomain.Interfaces;
-using FunWithFoodDomain.Services;
 
 namespace FunWithFood.Services
 {
@@ -39,6 +39,39 @@ namespace FunWithFood.Services
             }).ToList();
 
             return dessertDisplayViewModels;
+        }
+
+        public async Task<DessertViewModel> GetDessertViewModelByIdAsync(Guid id)
+        {
+            DessertDataModel dessertDataModel = await _dessertService.GetDessertDataModelByIdAsync(id);
+
+            DessertViewModel dessertViewModel = _dessertMapper.MapDessertDataModelToDessertViewModel(dessertDataModel);
+            dessertViewModel.ImageBase64 = _imageConversionService.ConvertByteToBase64(dessertDataModel.ImageData);
+
+            return dessertViewModel;
+        }
+
+        public async Task AddDessertAsync(AddDessertDto addDessertDto)
+        {
+            byte[] imageData = await _imageConversionService.ConvertFileToByteArray(addDessertDto.ImageFile);
+
+            DessertDataModel dessertDataModel = _dessertMapper.MapAddDessertDtoToDessertDataModel(addDessertDto, imageData);
+            await _dessertService.AddDessertAsync(dessertDataModel);
+        }
+
+        public async Task EditDessertAsync(EditDessertDto editDessertDto)
+        {
+            byte[]? imageData = editDessertDto.ImageFile is null ? _imageConversionService.ConvertBase64ToByte(editDessertDto.ImageBase64) :
+                                await _imageConversionService.ConvertFileToByteArray(editDessertDto.ImageFile);
+
+            DessertDataModel dessertDataModel = _dessertMapper.MapEditDessertDtoToDessertDataModel(editDessertDto, imageData);
+
+            await _dessertService.EditDessertAsync(dessertDataModel);
+        }
+
+        public async Task DeleteDessertAsync(Guid id)
+        {
+            await _dessertService.DeleteDessertAsync(id);
         }
     }
 }
