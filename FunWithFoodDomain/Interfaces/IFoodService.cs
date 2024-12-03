@@ -5,7 +5,7 @@ namespace FunWithFoodDomain.Interfaces
     public interface IFoodService
     {
         Task<IEnumerable<FoodDataModel>> GetAllFoodDataModelAsync();
-        Task<FoodDataModel> GetFoodDataModelById(Guid id);
+        Task<FoodDataModel> GetFoodDataModelByIdAsync(Guid id);
         Task AddFoodAsync(FoodDataModel foodDataModel);
         Task EditFoodAsync(FoodDataModel foodDataModel);
         Task DeleteFoodAsync(Guid id);

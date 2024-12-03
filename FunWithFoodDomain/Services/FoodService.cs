@@ -26,7 +26,7 @@ namespace FunWithFoodDomain.Services
             return foodDataModels;
         }
 
-        public async Task<FoodDataModel> GetFoodDataModelById(Guid id)
+        public async Task<FoodDataModel> GetFoodDataModelByIdAsync(Guid id)
         {
             Food food = await _foodRepository.GetByIdAsync(id, true) ?? throw new NotFoundException("Food Not Found");
 

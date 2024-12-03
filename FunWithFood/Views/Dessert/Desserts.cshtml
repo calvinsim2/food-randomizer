@@ -1,0 +1,76 @@
+﻿@using FunWithFood.ViewModels
+@{
+    ViewData["Title"] = "Desserts";
+}
+
+@{
+    bool isUserAuthenticated = Context.Request.Cookies["AuthToken"] != null && ViewBag.IsTokenValid;
+}
+
+@model List<DessertDisplayViewModel>
+
+<div class="text-center mx-auto">
+    <div class="text-center mx-auto" style="width: 18rem;">
+        <h1 class="display-4 header-font">Desserts!</h1>
+    </div>
+    <div class="form-group mb-3 mx-auto mt-2" style="max-width: 200px;">
+        <select id="cuisineFilter" class="form-select text-center mx-auto text-font" asp-items="ViewBag.CuisineList">
+            <option value="">All</option>
+        </select>
+
+    </div>
+    <div class="container d-flex flex-row flex-wrap justify-content-start mx-auto">
+        @{
+            foreach (DessertDisplayViewModel dessert in Model)
+            {
+                <div class="card food-card mx-auto border border-2 rounded border-dark" style="max-width: 18rem;" data-cuisine="@dessert.CuisineType">
+                    <div style="width: 18rem; height: 200px">
+                        <img src="data:image/jpeg;base64,@dessert.ImageBase64" alt="Dessert Image" class="card-img-top food-image">
+                    </div>
+
+                    <div class="card-body" style="max-width: 18rem;">
+                        <h5 class="card-title">@dessert.Name</h5>
+                        <p class="card-text">@dessert.CuisineType</p>
+                        @if (isUserAuthenticated)
+                        {
+                            <a asp-controller="Dessert" asp-action="EditDessertPage" asp-route-id="@dessert.Id" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+                            <a asp-controller="Dessert" asp-action="DeleteDessert" asp-route-id="@dessert.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        }
+                    </div>
+                    
+                </div>
+            }
+        }
+
+    </div>
+    @if (isUserAuthenticated)
+    {
+        <div class="text-center mt-2">
+            <form asp-controller="Dessert" asp-action="AddDessertPage" method="get">
+                <button type="submit" class="btn btn-primary">Add New Dessert!</button>
+            </form>
+        </div>
+    }
+
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        $('#cuisineFilter').on('change', function () {
+            const selectedCuisine = $(this).val();
+
+            $('.food-card').each(function () {
+                const cardCuisine = $(this).data('cuisine');
+                if (selectedCuisine === "" || cardCuisine === selectedCuisine) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    })
+
+</script>

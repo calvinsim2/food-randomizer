@@ -71,11 +71,13 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<IFoodApplicationService, FoodApplicationService>();
     services.AddScoped<IAdminApplicationService, AdminApplicationService>();
     services.AddScoped<IHealthCheckApplicationService, HealthCheckApplicationService>();
+    services.AddScoped<IDessertApplicationService, DessertApplicationService>();
 
     services.AddScoped<ICuisineService, CuisineService>();
     services.AddScoped<IFoodService, FoodService>();
     services.AddScoped<IAdminService, AdminService>();
     services.AddScoped<IHealthCheckService, HealthCheckService>();
+    services.AddScoped<IDessertService, DessertService>();
 
 
     #endregion
@@ -86,6 +88,7 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<IFoodRepository, FoodRepository>();
     services.AddScoped<IAdminRepository, AdminRepository>();
     services.AddScoped<IHealthCheckRepository, HealthCheckRepository>();
+    services.AddScoped<IDessertRepository, DessertRepository>();
 
     #endregion
 
@@ -104,6 +107,9 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddScoped<IAdminMapper, AdminMapper>();
     services.AddScoped<IAdminDomainMapper, AdminDomainMapper>();
+
+    services.AddScoped<IDessertMapper, DessertMapper>();
+    services.AddScoped<IDessertDomainMapper, DessertDomainMapper>();
 
     #endregion
 

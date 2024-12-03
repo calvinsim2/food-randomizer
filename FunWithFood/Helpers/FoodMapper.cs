@@ -19,9 +19,9 @@ namespace FunWithFood.Helpers
         {
             List<FoodViewModel> foodViewModels = new List<FoodViewModel>();
 
-            foreach (var cuisineDataModel in foodDataModels)
+            foreach (var foodDataModel in foodDataModels)
             {
-                FoodViewModel foodViewModel = _mapper.Map<FoodViewModel>(cuisineDataModel);
+                FoodViewModel foodViewModel = _mapper.Map<FoodViewModel>(foodDataModel);
                 foodViewModels.Add(foodViewModel);
             }
 
