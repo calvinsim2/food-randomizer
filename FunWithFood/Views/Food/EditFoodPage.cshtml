@@ -11,6 +11,7 @@
 
     <form asp-action="EditFood" asp-controller="Food" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImageBase64" />
         <select class="form-control mx-auto" style="width: 400px" asp-for="CuisineId" asp-items="ViewBag.CuisineList">
         <option value="@Model.CuisineId">-- Select Cuisine --</option>
     </select>
