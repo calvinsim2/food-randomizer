@@ -1,4 +1,4 @@
-using FunWithFood.Dto.Food;
+using FunWithFood.Dto.MainCourse;
 using FunWithFood.Interfaces;
 using FunWithFood.Models;
 using FunWithFood.Utilites;
@@ -16,19 +16,19 @@ namespace FunWithFood.Controllers
     public class FoodController : Controller
     {
         private readonly ILogger<FoodController> _logger;
-        private readonly IFoodApplicationService _foodApplicationService;
+        private readonly IMainCourseApplicationService _mainCourseApplicationService;
         private readonly ICuisineApplicationService _cuisineApplicationService;
         private readonly IJwtTokenHandler _jwtTokenHandler;
         private readonly ICommonUtilityMethods _commonUtilityMethods;
 
         public FoodController(ILogger<FoodController> logger, 
-                              IFoodApplicationService foodApplicationService, 
+                              IMainCourseApplicationService mainCourseApplicationService, 
                               ICuisineApplicationService cuisineApplicationService,
                               IJwtTokenHandler jwtTokenHandler,
                               ICommonUtilityMethods commonUtilityMethods)
         {
             _logger = logger;
-            _foodApplicationService = foodApplicationService;
+            _mainCourseApplicationService = mainCourseApplicationService;
             _cuisineApplicationService = cuisineApplicationService;
             _jwtTokenHandler = jwtTokenHandler;
             _commonUtilityMethods = commonUtilityMethods;
@@ -37,23 +37,23 @@ namespace FunWithFood.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<FoodDisplayViewModel> foodDisplayViewModels = (await _foodApplicationService.GetAllFoodDisplayViewModel()).ToList();
+            List<MainCourseDisplayViewModel> mainCourseDisplayViewModels = (await _mainCourseApplicationService.GetAllMainCourseDisplayViewModel()).ToList();
 
-            if (!foodDisplayViewModels.Any())
+            if (!mainCourseDisplayViewModels.Any())
             {
-                return View(new FoodDisplayViewModel { Name = Constant.NoFoodAvailable, CuisineType = string.Empty, ImageBase64 = null });
+                return View(new MainCourseDisplayViewModel { Name = Constant.NoMainCourseAvailable, CuisineType = string.Empty, ImageBase64 = null });
             }
 
-            FoodDisplayViewModel randomSelectedFood = UtilityMethods.SelectRandomFoodToDisplay(foodDisplayViewModels);
+            MainCourseDisplayViewModel randomSelectedMainCourse = UtilityMethods.SelectRandomFoodToDisplay(mainCourseDisplayViewModels);
 
-            return View(randomSelectedFood);
+            return View(randomSelectedMainCourse);
         }
 
         [HttpGet]
         public async Task<IActionResult> Foods()
         {
-            List<FoodDisplayViewModel> foodDisplayViewModels = 
-                            (await _foodApplicationService.GetAllFoodDisplayViewModel()).ToList();
+            List<MainCourseDisplayViewModel> mainCourseDisplayViewModels = 
+                            (await _mainCourseApplicationService.GetAllMainCourseDisplayViewModel()).ToList();
             string? token = HttpContext.Request.Cookies["AuthToken"];
             bool isTokenValid = !string.IsNullOrEmpty(token) && _jwtTokenHandler.IsTokenValid(token);
 
@@ -61,22 +61,22 @@ namespace FunWithFood.Controllers
             ViewBag.CuisineList = new SelectList(cuisineViewModels, "Type", "Type");
             ViewBag.IsTokenValid = isTokenValid;
 
-            return View(foodDisplayViewModels);
+            return View(mainCourseDisplayViewModels);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetRandomFood()
         {
-            List<FoodDisplayViewModel> foodDisplayViewModels = (await _foodApplicationService.GetAllFoodDisplayViewModel()).ToList();
+            List<MainCourseDisplayViewModel> mainCourseDisplayViewModels = (await _mainCourseApplicationService.GetAllMainCourseDisplayViewModel()).ToList();
 
-            if (!foodDisplayViewModels.Any())
+            if (!mainCourseDisplayViewModels.Any())
             {
-                return Json(new FoodDisplayViewModel { Name = Constant.NoFoodAvailable, CuisineType = string.Empty, ImageBase64 = null });
+                return Json(new MainCourseDisplayViewModel { Name = Constant.NoMainCourseAvailable, CuisineType = string.Empty, ImageBase64 = null });
             }
 
-            FoodDisplayViewModel randomFood = 
-                foodDisplayViewModels[_commonUtilityMethods.GenerateRandomInteger(foodDisplayViewModels.Count)];
-            return Json(randomFood);
+            MainCourseDisplayViewModel randomMainCourse = 
+                mainCourseDisplayViewModels[_commonUtilityMethods.GenerateRandomInteger(mainCourseDisplayViewModels.Count)];
+            return Json(randomMainCourse);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -90,18 +90,18 @@ namespace FunWithFood.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<IActionResult> AddFood(AddFoodDto addFoodDto)
+        public async Task<IActionResult> AddFood(AddMainCourseDto addMainCourseDto)
         {
-            await _foodApplicationService.AddFoodAsync(addFoodDto);
+            await _mainCourseApplicationService.AddMainCourseAsync(addMainCourseDto);
             return RedirectToAction("Foods");
 
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<IActionResult> EditFood(EditFoodDto editFoodDto)
+        public async Task<IActionResult> EditFood(EditMainCourseDto editFoodDto)
         {
-            await _foodApplicationService.EditFoodAsync(editFoodDto);
+            await _mainCourseApplicationService.EditMainCourseAsync(editFoodDto);
 
             return RedirectToAction("Foods");
         }
@@ -110,9 +110,9 @@ namespace FunWithFood.Controllers
         [HttpGet]
         public async Task<IActionResult> EditFoodPage(Guid id)
         {
-            FoodViewModel? foodViewModel = await _foodApplicationService.GetFoodViewModelByIdAsync(id);
+            MainCourseViewModel? mainCourseViewModel = await _mainCourseApplicationService.GetMainCourseViewModelByIdAsync(id);
 
-            if (foodViewModel is null)
+            if (mainCourseViewModel is null)
             {
                 return RedirectToAction("Foods");
             }
@@ -120,21 +120,21 @@ namespace FunWithFood.Controllers
             List<CuisineViewModel> cuisineViewModels = (await _cuisineApplicationService.GetAllCuisineViewModelAsync()).ToList();
             ViewBag.CuisineList = new SelectList(cuisineViewModels, "Id", "Type");
 
-            EditFoodDto editFoodDto = new EditFoodDto
+            EditMainCourseDto editMainCourseDto = new EditMainCourseDto
             {
-                Id = foodViewModel.Id,
-                CuisineId = foodViewModel.CuisineId,
-                Name = foodViewModel.Name,
-                ImageBase64 = foodViewModel.ImageBase64,
+                Id = mainCourseViewModel.Id,
+                CuisineId = mainCourseViewModel.CuisineId,
+                Name = mainCourseViewModel.Name,
+                ImageBase64 = mainCourseViewModel.ImageBase64,
             };
 
-            return View(editFoodDto);
+            return View(editMainCourseDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteFood(Guid id)
         {
-            await _foodApplicationService.DeleteFoodAsync(id);
+            await _mainCourseApplicationService.DeleteMainCourseAsync(id);
 
             return RedirectToAction("Foods");
         }

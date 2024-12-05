@@ -10,9 +10,9 @@ namespace FunWithFoodDomain.Services
     {
         private readonly ICuisineRepository _cuisineRepository;
         private readonly ICuisineDomainMapper _cuisineDomainMapper;
-        private readonly IFoodService _foodService;
+        private readonly IMainCourseService _foodService;
 
-        public CuisineService(ICuisineRepository cuisineRepository, ICuisineDomainMapper cuisineMapper, IFoodService foodService)
+        public CuisineService(ICuisineRepository cuisineRepository, ICuisineDomainMapper cuisineMapper, IMainCourseService foodService)
         {
             _cuisineRepository = cuisineRepository;
             _cuisineDomainMapper = cuisineMapper;
@@ -62,7 +62,7 @@ namespace FunWithFoodDomain.Services
             Cuisine cuisine = await _cuisineRepository.GetByIdAsync(id, true)
                                 ?? throw new NotFoundException("Cuisine Not Found");
 
-            await _foodService.DeleteFoodByCuisineIdAsync(id, true);
+            await _foodService.DeleteMainCourseByCuisineIdAsync(id, true);
 
             _cuisineRepository.Remove(cuisine);
             await _cuisineRepository.SaveChangesAsync();

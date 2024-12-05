@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
 using FunWithFood.Controllers;
-using FunWithFood.Dto.Food;
+using FunWithFood.Dto.MainCourse;
 using FunWithFood.Interfaces;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.Constants;
@@ -16,12 +16,12 @@ namespace FunWithFoodTest.Application.Controller
     public class FoodControllerTest
     {
         private static readonly ILogger<FoodController> _loggerMock = A.Fake<ILogger<FoodController>>();
-        private static readonly IFoodApplicationService _foodApplicationServiceMock = A.Fake<IFoodApplicationService>();
+        private static readonly IMainCourseApplicationService _mainCourseApplicationServiceMock = A.Fake<IMainCourseApplicationService>();
         private static readonly ICuisineApplicationService _cuisineApplicationServiceMock = A.Fake<ICuisineApplicationService>();
         private static readonly IJwtTokenHandler _jwtTokenHandlerMock = A.Fake<IJwtTokenHandler>();
         private static readonly ICommonUtilityMethods _commonUtilityMethodsMock = A.Fake<ICommonUtilityMethods>();
-        private readonly FoodController _foodController = new FoodController(_loggerMock,
-                                                                            _foodApplicationServiceMock,
+        private readonly FoodController _mainCourseController = new FoodController(_loggerMock,
+                                                                            _mainCourseApplicationServiceMock,
                                                                             _cuisineApplicationServiceMock,
                                                                             _jwtTokenHandlerMock,
                                                                             _commonUtilityMethodsMock);
@@ -31,7 +31,7 @@ namespace FunWithFoodTest.Application.Controller
         public async Task Index_Positive_DisplayIndexPageWithExistingFood_FoodDisplayViewModelShouldBeSelected()
         {
             // Arrange
-            FoodDisplayViewModel foodOneMock = new FoodDisplayViewModel
+            MainCourseDisplayViewModel foodOneMock = new MainCourseDisplayViewModel
             {
                 Id = Guid.NewGuid(),
                 Name = "Nasi Lemak",
@@ -39,18 +39,18 @@ namespace FunWithFoodTest.Application.Controller
                 ImageBase64 = null
             };
 
-            List<FoodDisplayViewModel> foodDisplayViewModelsMock = new List<FoodDisplayViewModel> { foodOneMock };
+            List<MainCourseDisplayViewModel> foodDisplayViewModelsMock = new List<MainCourseDisplayViewModel> { foodOneMock };
 
-            A.CallTo(() => _foodApplicationServiceMock.GetAllFoodDisplayViewModel())
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetAllMainCourseDisplayViewModel())
                                                       .WithAnyArguments()
                                                       .Returns(foodDisplayViewModelsMock);
 
             // Act
-            IActionResult result = await _foodController.Index();
+            IActionResult result = await _mainCourseController.Index();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            FoodDisplayViewModel model = Assert.IsAssignableFrom<FoodDisplayViewModel>(viewResult.ViewData.Model);
+            MainCourseDisplayViewModel model = Assert.IsAssignableFrom<MainCourseDisplayViewModel>(viewResult.ViewData.Model);
             Assert.Equal("Nasi Lemak", model.Name);
             Assert.Equal("Muslim", model.CuisineType);
         }
@@ -60,19 +60,19 @@ namespace FunWithFoodTest.Application.Controller
         {
             // Arrange
 
-            List<FoodDisplayViewModel> foodDisplayViewModelsMock = new List<FoodDisplayViewModel>();
+            List<MainCourseDisplayViewModel> foodDisplayViewModelsMock = new List<MainCourseDisplayViewModel>();
 
-            A.CallTo(() => _foodApplicationServiceMock.GetAllFoodDisplayViewModel())
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetAllMainCourseDisplayViewModel())
                                                       .WithAnyArguments()
                                                       .Returns(foodDisplayViewModelsMock);
 
             // Act
-            IActionResult result = await _foodController.Index();
+            IActionResult result = await _mainCourseController.Index();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            FoodDisplayViewModel model = Assert.IsAssignableFrom<FoodDisplayViewModel>(viewResult.ViewData.Model);
-            Assert.Equal(Constant.NoFoodAvailable, model.Name);
+            MainCourseDisplayViewModel model = Assert.IsAssignableFrom<MainCourseDisplayViewModel>(viewResult.ViewData.Model);
+            Assert.Equal(Constant.NoMainCourseAvailable, model.Name);
             Assert.Equal(string.Empty, model.CuisineType);
         }
 
@@ -81,11 +81,11 @@ namespace FunWithFoodTest.Application.Controller
         {
             // Arrange
 
-            A.CallTo(() => _foodApplicationServiceMock.GetAllFoodDisplayViewModel())
-                .Returns(new List<FoodDisplayViewModel>
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetAllMainCourseDisplayViewModel())
+                .Returns(new List<MainCourseDisplayViewModel>
                 {
-                    new FoodDisplayViewModel { Name = "Pizza", CuisineType = "Italian" },
-                    new FoodDisplayViewModel { Name = "Sushi", CuisineType = "Japanese" }
+                    new MainCourseDisplayViewModel { Name = "Pizza", CuisineType = "Italian" },
+                    new MainCourseDisplayViewModel { Name = "Sushi", CuisineType = "Japanese" }
                 });
 
             A.CallTo(() => _cuisineApplicationServiceMock.GetAllCuisineViewModelAsync())
@@ -100,47 +100,47 @@ namespace FunWithFoodTest.Application.Controller
             A.CallTo(() => _jwtTokenHandlerMock.IsTokenValid("valid-token")).Returns(true);
 
 
-            _foodController.ControllerContext = new ControllerContext { HttpContext = _httpContextMock };
+            _mainCourseController.ControllerContext = new ControllerContext { HttpContext = _httpContextMock };
 
             ITempDataProvider tempDataProvider = A.Fake<ITempDataProvider>();
             TempDataDictionary tempData = new TempDataDictionary(_httpContextMock, tempDataProvider);
-            _foodController.TempData = tempData;
+            _mainCourseController.TempData = tempData;
 
             // Act
-            IActionResult result = await _foodController.Foods();
+            IActionResult result = await _mainCourseController.Foods();
 
             // Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
 
-            var cuisineList = Assert.IsType<SelectList>(_foodController.ViewBag.CuisineList);
+            var cuisineList = Assert.IsType<SelectList>(_mainCourseController.ViewBag.CuisineList);
             Assert.Equal(2, cuisineList.Items.Count);
 
-            Assert.True((bool)_foodController.ViewBag.IsTokenValid);
+            Assert.True((bool)_mainCourseController.ViewBag.IsTokenValid);
         }
 
         [Fact]
         public async Task GetRandomFood_Positive_FoodExist_ReturnRandomFood()
         {
             // Arrange
-            List<FoodDisplayViewModel> foodDisplayViewModelsMock = new List<FoodDisplayViewModel>
+            List<MainCourseDisplayViewModel> foodDisplayViewModelsMock = new List<MainCourseDisplayViewModel>
             {
-                new FoodDisplayViewModel { Name = "Pizza", CuisineType = "Italian" },
-                new FoodDisplayViewModel { Name = "Sushi", CuisineType = "Japanese" }
+                new MainCourseDisplayViewModel { Name = "Pizza", CuisineType = "Italian" },
+                new MainCourseDisplayViewModel { Name = "Sushi", CuisineType = "Japanese" }
             };
 
-            A.CallTo(() => _foodApplicationServiceMock.GetAllFoodDisplayViewModel()).Returns(foodDisplayViewModelsMock);
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetAllMainCourseDisplayViewModel()).Returns(foodDisplayViewModelsMock);
 
             A.CallTo(() => _commonUtilityMethodsMock.GenerateRandomInteger(foodDisplayViewModelsMock.Count))
                                                     .WithAnyArguments().Returns(0);
 
             // Act
-            IActionResult result = await _foodController.GetRandomFood();
+            IActionResult result = await _mainCourseController.GetRandomFood();
 
             // Assert
             JsonResult jsonResult = Assert.IsType<JsonResult>(result);
 
             Assert.NotNull(jsonResult.Value);
-            FoodDisplayViewModel foodDisplayViewModel = (FoodDisplayViewModel)jsonResult.Value;
+            MainCourseDisplayViewModel foodDisplayViewModel = (MainCourseDisplayViewModel)jsonResult.Value;
 
             Assert.Equal("Pizza", foodDisplayViewModel.Name);
             Assert.Equal("Italian", foodDisplayViewModel.CuisineType);
@@ -150,23 +150,23 @@ namespace FunWithFoodTest.Application.Controller
         public async Task GetRandomFood_Negative_NoFoodExists_ReturnDefaultValue()
         {
             // Arrange
-            List<FoodDisplayViewModel> foodDisplayViewModelsMock = new List<FoodDisplayViewModel>();
+            List<MainCourseDisplayViewModel> foodDisplayViewModelsMock = new List<MainCourseDisplayViewModel>();
 
-            A.CallTo(() => _foodApplicationServiceMock.GetAllFoodDisplayViewModel()).Returns(foodDisplayViewModelsMock);
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetAllMainCourseDisplayViewModel()).Returns(foodDisplayViewModelsMock);
 
             A.CallTo(() => _commonUtilityMethodsMock.GenerateRandomInteger(foodDisplayViewModelsMock.Count))
                                                     .WithAnyArguments().Returns(0);
 
             // Act
-            IActionResult result = await _foodController.GetRandomFood();
+            IActionResult result = await _mainCourseController.GetRandomFood();
 
             // Assert
             JsonResult jsonResult = Assert.IsType<JsonResult>(result);
 
             Assert.NotNull(jsonResult.Value);
-            FoodDisplayViewModel foodDisplayViewModel = (FoodDisplayViewModel)jsonResult.Value;
+            MainCourseDisplayViewModel foodDisplayViewModel = (MainCourseDisplayViewModel)jsonResult.Value;
 
-            Assert.Equal(Constant.NoFoodAvailable, foodDisplayViewModel.Name);
+            Assert.Equal(Constant.NoMainCourseAvailable, foodDisplayViewModel.Name);
             Assert.Equal(string.Empty, foodDisplayViewModel.CuisineType);
         }
 
@@ -184,12 +184,12 @@ namespace FunWithFoodTest.Application.Controller
                 .Returns(mockCuisineList);
 
             // Act
-            IActionResult result = await _foodController.AddFoodPage();
+            IActionResult result = await _mainCourseController.AddFoodPage();
 
             // Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
 
-            SelectList cuisineList = Assert.IsType<SelectList>(_foodController.ViewBag.CuisineList);
+            SelectList cuisineList = Assert.IsType<SelectList>(_mainCourseController.ViewBag.CuisineList);
             Assert.Equal(2, cuisineList.Count());
             Assert.Contains(cuisineList, c => c.Text == "Italian");
             Assert.Contains(cuisineList, c => c.Text == "Japanese");
@@ -202,7 +202,7 @@ namespace FunWithFoodTest.Application.Controller
         public async Task AddFood_Positive_AddFoodAsyncShouldBeCalled()
         {
             // Arrange
-            AddFoodDto addFoodDto = new AddFoodDto
+            AddMainCourseDto addFoodDto = new AddMainCourseDto
             {
                 CuisineId = Guid.NewGuid(),
                 Name = "Chinese",
@@ -210,14 +210,14 @@ namespace FunWithFoodTest.Application.Controller
             };
 
             // Act
-            IActionResult result = await _foodController.AddFood(addFoodDto);
+            IActionResult result = await _mainCourseController.AddFood(addFoodDto);
 
             // Assert
             RedirectToActionResult viewResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Foods", viewResult.ActionName);
             Assert.Null(viewResult.ControllerName); // Ensure no redirection to a different controller
 
-            A.CallTo(() => _foodApplicationServiceMock.AddFoodAsync(addFoodDto))
+            A.CallTo(() => _mainCourseApplicationServiceMock.AddMainCourseAsync(addFoodDto))
                 .MustHaveHappened();
 
         }
@@ -226,7 +226,7 @@ namespace FunWithFoodTest.Application.Controller
         public async Task EditFood_Positive_EditFoodAsyncShouldBeCalled()
         {
             // Arrange
-            EditFoodDto editFoodDtoMock = new EditFoodDto
+            EditMainCourseDto editFoodDtoMock = new EditMainCourseDto
             {
                 Id = Guid.NewGuid(),
                 CuisineId = Guid.NewGuid(),
@@ -234,12 +234,12 @@ namespace FunWithFoodTest.Application.Controller
             };
 
             // Act
-            IActionResult result = await _foodController.EditFood(editFoodDtoMock);
+            IActionResult result = await _mainCourseController.EditFood(editFoodDtoMock);
 
             // Assert
             RedirectToActionResult redirectResult = Assert.IsType<RedirectToActionResult>(result);
 
-            A.CallTo(() => _foodApplicationServiceMock.EditFoodAsync(editFoodDtoMock))
+            A.CallTo(() => _mainCourseApplicationServiceMock.EditMainCourseAsync(editFoodDtoMock))
                 .MustHaveHappened();
 
             Assert.Equal("Foods", redirectResult.ActionName);
@@ -251,7 +251,7 @@ namespace FunWithFoodTest.Application.Controller
         {
             // Arrange
             Guid mockId = Guid.NewGuid();
-            FoodViewModel foodViewModel = new FoodViewModel
+            MainCourseViewModel foodViewModel = new MainCourseViewModel
             {
                 Id = mockId,
                 CuisineId = mockId,
@@ -265,23 +265,23 @@ namespace FunWithFoodTest.Application.Controller
                 new CuisineViewModel { Id = Guid.NewGuid(), Type = "Japanese" }
             };
 
-            A.CallTo(() => _foodApplicationServiceMock.GetFoodViewModelByIdAsync(mockId))
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetMainCourseViewModelByIdAsync(mockId))
                                                       .WithAnyArguments()
                                                       .Returns(foodViewModel);
 
             A.CallTo(() => _cuisineApplicationServiceMock.GetAllCuisineViewModelAsync()).Returns(mockCuisineList);
 
             // Act
-            IActionResult result = await _foodController.EditFoodPage(mockId);
+            IActionResult result = await _mainCourseController.EditFoodPage(mockId);
 
             // Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
-            EditFoodDto model = Assert.IsAssignableFrom<EditFoodDto>(viewResult.ViewData.Model);
+            EditMainCourseDto model = Assert.IsAssignableFrom<EditMainCourseDto>(viewResult.ViewData.Model);
             Assert.Equal(mockId, model.Id);
             Assert.Equal("Mee Pok", model.Name);
             Assert.Equal(mockId, model.CuisineId);
 
-            SelectList cuisineList = Assert.IsType<SelectList>(_foodController.ViewBag.CuisineList);
+            SelectList cuisineList = Assert.IsType<SelectList>(_mainCourseController.ViewBag.CuisineList);
             Assert.Equal(2, cuisineList.Count());
             Assert.Contains(cuisineList, c => c.Text == "Italian");
             Assert.Contains(cuisineList, c => c.Text == "Japanese");
@@ -291,15 +291,15 @@ namespace FunWithFoodTest.Application.Controller
         public async Task EditFoodPage_Negative_找不到食物_ShouldRedirectToFoods()
         {
             // Arrange
-            FoodViewModel? foodViewModel = null;
+            MainCourseViewModel? foodViewModel = null;
             Guid mockId = Guid.NewGuid();
 
-            A.CallTo(() => _foodApplicationServiceMock.GetFoodViewModelByIdAsync(mockId))
+            A.CallTo(() => _mainCourseApplicationServiceMock.GetMainCourseViewModelByIdAsync(mockId))
                                                       .WithAnyArguments()
                                                       .Returns(foodViewModel);
 
             // Act
-            IActionResult result = await _foodController.EditFoodPage(mockId);
+            IActionResult result = await _mainCourseController.EditFoodPage(mockId);
 
 
             // Assert
@@ -315,11 +315,11 @@ namespace FunWithFoodTest.Application.Controller
             Guid mockId = Guid.NewGuid();
 
             // Act
-            IActionResult result = await _foodController.DeleteFood(mockId);
+            IActionResult result = await _mainCourseController.DeleteFood(mockId);
 
             // Assert
             Assert.IsType<RedirectToActionResult>(result);
-            A.CallTo(() => _foodApplicationServiceMock.DeleteFoodAsync(mockId))
+            A.CallTo(() => _mainCourseApplicationServiceMock.DeleteMainCourseAsync(mockId))
                 .MustHaveHappened();
         }
     }

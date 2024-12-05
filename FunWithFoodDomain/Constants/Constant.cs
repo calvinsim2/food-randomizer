@@ -2,6 +2,6 @@
 {
     public static class Constant
     {
-        public static string NoFoodAvailable = "No Food Available";
+        public static string NoMainCourseAvailable = "No Main Course Available";
     }
 }

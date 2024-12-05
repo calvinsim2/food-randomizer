@@ -1,6 +1,6 @@
-﻿namespace FunWithFood.Dto.Food
+﻿namespace FunWithFood.Dto.MainCourse
 {
-    public class AddFoodDto
+    public class AddMainCourseDto
     {
         public Guid CuisineId { get; set; }
         public string Name { get; set; } = string.Empty;
