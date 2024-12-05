@@ -32,7 +32,7 @@
         }).then(
             (response) => {
                 if (response.success) {
-                    window.location.href = '@Url.Action("Index", "Food")';
+                    window.location.href = '@Url.Action("Index", "MainCourse")';
                 } else {
                     alert(response.message || "Login failed. Please try again.");
                 }
