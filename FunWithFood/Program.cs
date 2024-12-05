@@ -68,13 +68,13 @@ void ConfigureServices(IServiceCollection services)
     #region Services Dependency Injections
 
     services.AddScoped<ICuisineApplicationService, CuisineApplicationService>();
-    services.AddScoped<IFoodApplicationService, FoodApplicationService>();
+    services.AddScoped<IMainCourseApplicationService, MainCourseApplicationService>();
     services.AddScoped<IAdminApplicationService, AdminApplicationService>();
     services.AddScoped<IHealthCheckApplicationService, HealthCheckApplicationService>();
     services.AddScoped<IDessertApplicationService, DessertApplicationService>();
 
     services.AddScoped<ICuisineService, CuisineService>();
-    services.AddScoped<IFoodService, FoodService>();
+    services.AddScoped<IMainCourseService, MainCourseService>();
     services.AddScoped<IAdminService, AdminService>();
     services.AddScoped<IHealthCheckService, HealthCheckService>();
     services.AddScoped<IDessertService, DessertService>();
@@ -85,7 +85,7 @@ void ConfigureServices(IServiceCollection services)
     #region Repository Dependency Injections
 
     services.AddScoped<ICuisineRepository, CuisineRepository>();
-    services.AddScoped<IFoodRepository, FoodRepository>();
+    services.AddScoped<IMainCourseRepository, MainCourseRepository>();
     services.AddScoped<IAdminRepository, AdminRepository>();
     services.AddScoped<IHealthCheckRepository, HealthCheckRepository>();
     services.AddScoped<IDessertRepository, DessertRepository>();
@@ -102,8 +102,8 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<ICuisineMapper, CuisineMapper>();
     services.AddScoped<ICuisineDomainMapper, CuisineDomainMapper>();
 
-    services.AddScoped<IFoodMapper, FoodMapper>();
-    services.AddScoped<IFoodDomainMapper, FoodDomainMapper>();
+    services.AddScoped<IMainCourseMapper, MainCourseMapper>();
+    services.AddScoped<IMainCourseDomainMapper, MainCourseDomainMapper>();
 
     services.AddScoped<IAdminMapper, AdminMapper>();
     services.AddScoped<IAdminDomainMapper, AdminDomainMapper>();

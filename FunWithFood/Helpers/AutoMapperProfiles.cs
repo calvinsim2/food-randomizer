@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using FunWithFood.Dto.Admin;
 using FunWithFood.Dto.Cuisine;
-using FunWithFood.Dto.Dessert;
-using FunWithFood.Dto.Food;
+using FunWithFood.Dto.MainCourse;
 using FunWithFood.ViewModels;
 using FunWithFoodDomain.DataModels;
 using FunWithFoodDomain.Models;
@@ -16,25 +15,20 @@ namespace FunWithFood.Helpers
             CreateMap<AddCuisineDto, CuisineDataModel>();
             CreateMap<EditCuisineDto, CuisineDataModel>();
             CreateMap<CuisineDataModel, CuisineViewModel>();
-            CreateMap<FoodViewModel, FoodDataModel>();
-            CreateMap<FoodDataModel, FoodViewModel>();
-            CreateMap<AddFoodDto, FoodDataModel>();
-            CreateMap<EditFoodDto, FoodDataModel>();
+            CreateMap<MainCourseViewModel, MainCourseDataModel>();
+            CreateMap<MainCourseDataModel, MainCourseViewModel>();
+            CreateMap<AddMainCourseDto, MainCourseDataModel>();
+            CreateMap<EditMainCourseDto, MainCourseDataModel>();
 
             CreateMap<Cuisine, CuisineDataModel>();
             CreateMap<CuisineDataModel, Cuisine>();
-            CreateMap<FoodDataModel, Food>();
-            CreateMap<Food, FoodDataModel>();
+            CreateMap<MainCourseDataModel, MainCourse>();
+            CreateMap<MainCourse, MainCourseDataModel>();
 
             CreateMap<LoginDto, LoginDataModel>();
             CreateMap<AddAdminDto, AddAdminDataModel>();
             CreateMap<AddAdminDataModel, Admin>();
 
-            CreateMap<AddDessertDto, DessertDataModel>();
-            CreateMap<EditDessertDto, DessertDataModel>();
-            CreateMap<Dessert, DessertDataModel>();
-            CreateMap<DessertDataModel, Dessert>();
-            CreateMap<DessertDataModel, DessertViewModel>();
         }
     }
 }

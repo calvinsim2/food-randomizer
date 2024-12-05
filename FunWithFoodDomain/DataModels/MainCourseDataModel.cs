@@ -1,10 +1,10 @@
-﻿namespace FunWithFood.ViewModels
+﻿namespace FunWithFoodDomain.DataModels
 {
-    public class FoodViewModel 
+    public class MainCourseDataModel
     {
         public Guid Id { get; set; }
         public Guid CuisineId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string? ImageBase64 { get; set; }
+        public byte[]? ImageData { get; set; }
     }
 }

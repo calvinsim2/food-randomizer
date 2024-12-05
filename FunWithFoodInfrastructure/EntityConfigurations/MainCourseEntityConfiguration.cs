@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FunWithFoodInfrastructure.EntityConfigurations
 {
-    public class FoodEntityConfiguration : IEntityTypeConfiguration<Food>
+    public class MainCourseEntityConfiguration : IEntityTypeConfiguration<MainCourse>
     {
-        public void Configure(EntityTypeBuilder<Food> builder)
+        public void Configure(EntityTypeBuilder<MainCourse> builder)
         {
             Extensions.ConfigureBaseEntity(builder);
 

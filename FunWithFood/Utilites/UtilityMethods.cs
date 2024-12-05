@@ -5,21 +5,21 @@ namespace FunWithFood.Utilites
 {
     public static class UtilityMethods
     {
-        public static FoodDisplayViewModel SelectRandomFoodToDisplay(IEnumerable<FoodDisplayViewModel> foods)
+        public static MainCourseDisplayViewModel SelectRandomFoodToDisplay(IEnumerable<MainCourseDisplayViewModel> foods)
         {
-            List<FoodDisplayViewModel> foodsList = foods.ToList();
+            List<MainCourseDisplayViewModel> foodsList = foods.ToList();
 
             if (foodsList.Count == 0)
             {
-                return new FoodDisplayViewModel
+                return new MainCourseDisplayViewModel
                 {
-                    Name = Constant.NoFoodAvailable,
+                    Name = Constant.NoMainCourseAvailable,
                 };
             }
 
             Random random = new Random();
             int randomIndex = random.Next(0, foodsList.Count);
-            FoodDisplayViewModel randomSelectedFood = foodsList[randomIndex];
+            MainCourseDisplayViewModel randomSelectedFood = foodsList[randomIndex];
 
             return randomSelectedFood;
         }

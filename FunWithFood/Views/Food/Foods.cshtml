@@ -7,7 +7,7 @@
     bool isUserAuthenticated = Context.Request.Cookies["AuthToken"] != null && ViewBag.IsTokenValid;
 }
 
-@model List<FoodDisplayViewModel>
+@model List<MainCourseDisplayViewModel>
 
 <div class="text-center mx-auto">
     <div class="text-center mx-auto" style="width: 18rem;">
@@ -21,7 +21,7 @@
     </div>
     <div class="container d-flex flex-row flex-wrap justify-content-start mx-auto">
         @{
-            foreach (FoodDisplayViewModel food in Model)
+            foreach (MainCourseDisplayViewModel food in Model)
             {
                 <div class="card food-card mx-auto border border-2 rounded border-dark" style="max-width: 18rem;" data-cuisine="@food.CuisineType">
                     <div style="width: 18rem; height: 200px">

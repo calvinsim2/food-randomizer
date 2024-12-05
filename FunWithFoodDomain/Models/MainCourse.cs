@@ -2,7 +2,7 @@
 
 namespace FunWithFoodDomain.Models
 {
-    public class Food : BaseEntity
+    public class MainCourse : BaseEntity
     {
         public Guid CuisineId { get; set; }
         public string Name { get; set; } = string.Empty;
