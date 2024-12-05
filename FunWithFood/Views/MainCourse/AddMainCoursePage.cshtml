@@ -1,22 +1,22 @@
 ﻿@using FunWithFood.Dto.MainCourse
 @{
-    ViewData["Title"] = "Add Food";
+    ViewData["Title"] = "Add Main Course";
 }
 
 @model AddMainCourseDto
 
 <div class="text-center bg-info border border-dark rounded" style="width: 600px; margin: 0 auto;">
-    <h1 class="display-4">Add Food</h1>
-    <form asp-action="AddFood" asp-controller="Food" enctype="multipart/form-data">
+    <h1 class="display-4">Add Main Course</h1>
+    <form asp-action="AddMainCourse" asp-controller="MainCourse" enctype="multipart/form-data">
         <select class="form-control mx-auto" style="width: 400px" asp-for="CuisineId" asp-items="ViewBag.CuisineList">
             <option value="">-- Select Cuisine --</option>
         </select>
-        <label class="mt-4">Food Name</label>
-        <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Insert Food Name" asp-for="Name" />
+        <label class="mt-4">Main Course Name</label>
+        <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="Insert Main Course Name" asp-for="Name" />
         <label class="mt-4">Image</label>
         <input type="file" class="form-control mx-auto" style="width: 400px" asp-for="ImageFile" accept="image/jpeg, image/png" />
 
 
-        <button type="submit" class="btn btn-primary m-2">Add Food</button>
+        <button type="submit" class="btn btn-primary m-2">Add Main Course</button>
     </form>
 </div>

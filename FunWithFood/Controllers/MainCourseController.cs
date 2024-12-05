@@ -13,15 +13,15 @@ using System.Diagnostics;
 
 namespace FunWithFood.Controllers
 {
-    public class FoodController : Controller
+    public class MainCourseController : Controller
     {
-        private readonly ILogger<FoodController> _logger;
+        private readonly ILogger<MainCourseController> _logger;
         private readonly IMainCourseApplicationService _mainCourseApplicationService;
         private readonly ICuisineApplicationService _cuisineApplicationService;
         private readonly IJwtTokenHandler _jwtTokenHandler;
         private readonly ICommonUtilityMethods _commonUtilityMethods;
 
-        public FoodController(ILogger<FoodController> logger, 
+        public MainCourseController(ILogger<MainCourseController> logger, 
                               IMainCourseApplicationService mainCourseApplicationService, 
                               ICuisineApplicationService cuisineApplicationService,
                               IJwtTokenHandler jwtTokenHandler,
@@ -44,13 +44,13 @@ namespace FunWithFood.Controllers
                 return View(new MainCourseDisplayViewModel { Name = Constant.NoMainCourseAvailable, CuisineType = string.Empty, ImageBase64 = null });
             }
 
-            MainCourseDisplayViewModel randomSelectedMainCourse = UtilityMethods.SelectRandomFoodToDisplay(mainCourseDisplayViewModels);
+            MainCourseDisplayViewModel randomSelectedMainCourse = UtilityMethods.SelectRandomMainCourseToDisplay(mainCourseDisplayViewModels);
 
             return View(randomSelectedMainCourse);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Foods()
+        public async Task<IActionResult> MainCourses()
         {
             List<MainCourseDisplayViewModel> mainCourseDisplayViewModels = 
                             (await _mainCourseApplicationService.GetAllMainCourseDisplayViewModel()).ToList();
@@ -65,7 +65,7 @@ namespace FunWithFood.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRandomFood()
+        public async Task<IActionResult> GetRandomMainCourse()
         {
             List<MainCourseDisplayViewModel> mainCourseDisplayViewModels = (await _mainCourseApplicationService.GetAllMainCourseDisplayViewModel()).ToList();
 
@@ -81,7 +81,7 @@ namespace FunWithFood.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
-        public async Task<IActionResult> AddFoodPage()
+        public async Task<IActionResult> AddMainCoursePage()
         {
             List<CuisineViewModel> cuisineViewModels = (await _cuisineApplicationService.GetAllCuisineViewModelAsync()).ToList();
             ViewBag.CuisineList = new SelectList(cuisineViewModels, "Id", "Type");
@@ -90,31 +90,31 @@ namespace FunWithFood.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<IActionResult> AddFood(AddMainCourseDto addMainCourseDto)
+        public async Task<IActionResult> AddMainCourse(AddMainCourseDto addMainCourseDto)
         {
             await _mainCourseApplicationService.AddMainCourseAsync(addMainCourseDto);
-            return RedirectToAction("Foods");
+            return RedirectToAction("MainCourses");
 
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<IActionResult> EditFood(EditMainCourseDto editFoodDto)
+        public async Task<IActionResult> EditMainCourse(EditMainCourseDto editFoodDto)
         {
             await _mainCourseApplicationService.EditMainCourseAsync(editFoodDto);
 
-            return RedirectToAction("Foods");
+            return RedirectToAction("MainCourses");
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
-        public async Task<IActionResult> EditFoodPage(Guid id)
+        public async Task<IActionResult> EditMainCoursePage(Guid id)
         {
             MainCourseViewModel? mainCourseViewModel = await _mainCourseApplicationService.GetMainCourseViewModelByIdAsync(id);
 
             if (mainCourseViewModel is null)
             {
-                return RedirectToAction("Foods");
+                return RedirectToAction("MainCourses");
             }
 
             List<CuisineViewModel> cuisineViewModels = (await _cuisineApplicationService.GetAllCuisineViewModelAsync()).ToList();
@@ -132,11 +132,11 @@ namespace FunWithFood.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> DeleteFood(Guid id)
+        public async Task<IActionResult> DeleteMainCourse(Guid id)
         {
             await _mainCourseApplicationService.DeleteMainCourseAsync(id);
 
-            return RedirectToAction("Foods");
+            return RedirectToAction("MainCourses");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

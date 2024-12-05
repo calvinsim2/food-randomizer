@@ -1,15 +1,15 @@
 ﻿@using FunWithFood.Dto.MainCourse
 @{
-    ViewData["Title"] = "Edit Food";
+    ViewData["Title"] = "Edit Main Course";
 }
 
 @model EditMainCourseDto
 
 <div div class="text-center bg-info border border-dark rounded" style="width: 600px; margin: 0 auto;">
-    <h1 class="display-4">Edit Food</h1>
+    <h1 class="display-4">Edit Main Course</h1>
 
 
-    <form asp-action="EditFood" asp-controller="Food" method="post" enctype="multipart/form-data">
+    <form asp-action="EditMainCourse" asp-controller="MainCourse" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="ImageBase64" />
         <select class="form-control mx-auto" style="width: 400px" asp-for="CuisineId" asp-items="ViewBag.CuisineList">
@@ -19,15 +19,15 @@
         <input type="text" class="form-control mx-auto" style="width: 400px" placeholder="@Model.Name" asp-for="Name" />
 
     <label>Image</label>
-    <img id="foodImage"
+    <img id="mainCourseImage"
          src="@(Model.ImageBase64 != null ? $"data:image/jpeg;base64,{Model.ImageBase64}" : "")"
-         alt="Food Image"
+         alt="Main Course Image"
          class="mx-auto"
          style="width: 200px; height: auto; margin-top: 10px; display: @(Model.ImageBase64 != null ? "block" : "none");" />
 
         <input type="file" id="imageUpload" asp-for="ImageFile" class="form-control mx-auto m-2" style="width: 400px" accept="image/jpeg, image/png" />
 
-    <button type="submit" class="btn btn-success m-2">Edit Food</button>
+    <button type="submit" class="btn btn-success m-2">Edit Main Course</button>
 </form>
 </div>
 
@@ -39,7 +39,7 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#foodImage').attr('src', e.target.result).show();
+                    $('#mainCourseImage').attr('src', e.target.result).show();
                 };
                 reader.readAsDataURL(file);
             }
