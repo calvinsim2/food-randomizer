@@ -49,7 +49,7 @@
             cardBody.html('<p>Loading new food...</p>');
 
             $.ajax({
-                url: '@Url.Action("GetRandomFood", "Food")',
+                url: '@Url.Action("GetRandomMainCourse", "MainCourse")',
                 type: 'GET',
             })
                 .then((data) => {
